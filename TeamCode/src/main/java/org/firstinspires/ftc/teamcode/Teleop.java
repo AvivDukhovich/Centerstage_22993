@@ -74,16 +74,16 @@ public class Teleop extends LinearOpMode {
     }
 
     public void runClaws() {
-        Claws.runClawsTeleop(gamepad1.left_bumper, gamepad1.right_bumper);
-        if (!HardwareLocal.pixelLeft() && Claws.isLeftClose() && Wrist.isWristDown() && HardwareLocal.SENSOR_USAGE) {
+        if (Arm.getArm1Position() > Arm.UNLOADING_POSITION) {
+            Claws.runClawsTeleop1(gamepad1.right_bumper, gamepad1.left_bumper);
+        } else {
+            Claws.runClawsTeleop2(gamepad1.right_bumper, gamepad1.left_bumper);
+        }
+        if (!HardwareLocal.pixelLeft() && !Claws.isLeftOpen() && Wrist.isWristDown()) {
             Claws.openLeftClaw();
         }
-        if (!HardwareLocal.pixelRight() && Claws.isRightClose() && Wrist.isWristDown() && HardwareLocal.SENSOR_USAGE) {
+        if (!HardwareLocal.pixelRight() && !Claws.isRightOpen() && Wrist.isWristDown()) {
             Claws.openRightClaw();
-        }
-        if (Wrist.isWristUp() && !HardwareLocal.pixelRight() && !HardwareLocal.pixelLeft() && Claws.isLeftOpen() && Claws.isRightOpen() && HardwareLocal.SENSOR_USAGE) {
-            Claws.closeLeftClaw();
-            Claws.closeRightClaw();
         }
     }
 
@@ -98,12 +98,10 @@ public class Teleop extends LinearOpMode {
             Wrist.setPosition(Wrist.WRIST_UNLOADING_POSITION + 0.01 * ((int) ((Arm.getArm1Position() - Arm.UNLOADING_POSITION) / -25)));
             EgnitionSystem.SLOW_MODE = true;
             EgnitionSystem.WAS_PRESSED = false;
-        } else if (Wrist.isWristDown() && HardwareLocal.pixelRight() && HardwareLocal.pixelLeft() && Claws.isLeftClose() && Claws.isRightClose() && !Wrist.UP && HardwareLocal.SENSOR_USAGE) {
+        } else if (Wrist.isWristDown() && HardwareLocal.pixelRight() && HardwareLocal.pixelLeft() && Claws.isLeftClose() && Claws.isRightClose() && !Wrist.UP) {
             sleep(100);
             Wrist.UP = true;
             Wrist.moveUp();
-        } else if (Wrist.isWristDown() && (!HardwareLocal.pixelRight() || !HardwareLocal.pixelLeft()) && Wrist.UP && HardwareLocal.SENSOR_USAGE) {
-            Wrist.UP = false;
         } else {
             Wrist.runWrist(gamepad1.y);
         }
@@ -131,8 +129,6 @@ public class Teleop extends LinearOpMode {
             HardwareLocal.HANGING_LAD = true;
             Arm.hangingModeArm();
         } else if (gamepad1.x && !Arm.LOADING_MODE_ACTIVE || !gamepad1.x && Arm.LOADING_MODE_ACTIVE) {
-            Claws.closeLeftClaw();
-            Claws.closeRightClaw();
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);
             EgnitionSystem.SLOW_MODE = false;
             EgnitionSystem.WAS_PRESSED = false;
@@ -206,25 +202,32 @@ public class Teleop extends LinearOpMode {
         HardwareLocal.init(ledDriver);
     }
 
+    public void ledTest () {
+        HardwareLocal.blue();
+    }
     public void touchAndGo() {
         if (HardwareLocal.getProximityValueLeft() == 152 || HardwareLocal.getProximityValueRight() == 152) {
             HardwareLocal.SENSOR_USAGE = false;
+        } else {
+            HardwareLocal.SENSOR_USAGE = true;
         }
         if (Arm.getArm1Position() <= Arm.MINIMAL_HOLD_POSITION) {
             HardwareLocal.PIXEL_IN_L = true;
             HardwareLocal.PIXEL_IN_R = true;
         }
-        if (!HardwareLocal.PIXEL_IN_R && HardwareLocal.pixelRight() && Claws.isRightOpen() && HardwareLocal.SENSOR_USAGE) {
+        if (!HardwareLocal.PIXEL_IN_R && HardwareLocal.pixelRight() && !Claws.isRightClose() && HardwareLocal.SENSOR_USAGE) {
             Claws.closeRightClaw();
             HardwareLocal.PIXEL_IN_R = true;
         } else if (!HardwareLocal.pixelRight()) {
             HardwareLocal.PIXEL_IN_R = false;
+            Wrist.UP = false;
         }
-        if (!HardwareLocal.PIXEL_IN_L && HardwareLocal.pixelLeft() && Claws.isLeftOpen() && HardwareLocal.SENSOR_USAGE) {
+        if (!HardwareLocal.PIXEL_IN_L && HardwareLocal.pixelLeft() && !Claws.isLeftClose() && HardwareLocal.SENSOR_USAGE) {
             Claws.closeLeftClaw();
             HardwareLocal.PIXEL_IN_L = true;
         } else if (!HardwareLocal.pixelLeft()) {
             HardwareLocal.PIXEL_IN_L = false;
+            Wrist.UP = false;
         }
     }
 

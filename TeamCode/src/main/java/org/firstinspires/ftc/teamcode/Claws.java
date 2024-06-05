@@ -8,10 +8,12 @@ public class Claws {
 // Variables
     private static Servo left_claw;
     private static Servo right_claw;
-    static final double LEFT_CLAW_CLOSED_POSITION = 0.65;
+    static final double LEFT_CLAW_CLOSED_POSITION = 0.64;
     static final double LEFT_CLAW_OPENED_POSITION = 0.5;
-    static final double RIGHT_CLAW_CLOSED_POSITION = 0.65;
+    static final double LEFT_CLAW_UNLOADING_POSITION = 0.54;
+    static final double RIGHT_CLAW_CLOSED_POSITION = 0.66;
     static final double RIGHT_CLAW_OPENED_POSITION = 0.8;
+    static final double RIGHT_CLAW_UNLOADING_POSITION = 0.76;
     private static boolean was_right_bumper_pressed;
     private static boolean was_left_bumper_pressed;
 
@@ -47,7 +49,7 @@ public class Claws {
     }
 
 // Operating system
-    public static void runClawsTeleop(boolean left_bumper_pressed, boolean right_bumper_pressed) {
+    public static void runClawsTeleop1(boolean left_bumper_pressed, boolean right_bumper_pressed) {
         if (right_bumper_pressed && !was_right_bumper_pressed) {
             if (Math.abs(right_claw.getPosition() - RIGHT_CLAW_CLOSED_POSITION) < Math.abs(right_claw.getPosition() - RIGHT_CLAW_OPENED_POSITION)) {
                 right_claw.setPosition(RIGHT_CLAW_OPENED_POSITION);
@@ -62,6 +64,28 @@ public class Claws {
             if (Math.abs(left_claw.getPosition() - LEFT_CLAW_CLOSED_POSITION)
                     < Math.abs(left_claw.getPosition() - LEFT_CLAW_OPENED_POSITION)) {
                 left_claw.setPosition(LEFT_CLAW_OPENED_POSITION);
+            } else {
+                left_claw.setPosition(LEFT_CLAW_CLOSED_POSITION);
+            }
+            was_left_bumper_pressed = true;
+        } else if (!left_bumper_pressed) {
+            was_left_bumper_pressed = false;
+        }
+    }
+    public static void runClawsTeleop2(boolean left_bumper_pressed, boolean right_bumper_pressed) {
+        if (right_bumper_pressed && !was_right_bumper_pressed) {
+            if (Math.abs(right_claw.getPosition() - RIGHT_CLAW_CLOSED_POSITION) < Math.abs(right_claw.getPosition() - RIGHT_CLAW_UNLOADING_POSITION)) {
+                right_claw.setPosition(RIGHT_CLAW_UNLOADING_POSITION);
+            } else {
+                right_claw.setPosition(RIGHT_CLAW_CLOSED_POSITION);
+            }
+            was_right_bumper_pressed = true;
+        } else if (!right_bumper_pressed) {
+            was_right_bumper_pressed = false;
+        }
+        if (left_bumper_pressed && !was_left_bumper_pressed) {
+            if (Math.abs(left_claw.getPosition() - LEFT_CLAW_CLOSED_POSITION) < Math.abs(left_claw.getPosition() - LEFT_CLAW_UNLOADING_POSITION)) {
+                left_claw.setPosition(LEFT_CLAW_UNLOADING_POSITION);
             } else {
                 left_claw.setPosition(LEFT_CLAW_CLOSED_POSITION);
             }
