@@ -74,9 +74,9 @@ public class Teleop extends LinearOpMode {
     }
 
     public void runClaws() {
-        if (Arm.getArm1Position() > Arm.UNLOADING_POSITION) {
+        if (Arm.getArm1Position() > Arm.UNLOADING_POSITION && !Wrist.isWristUp()) {
             Claws.runClawsTeleop1(gamepad1.right_bumper, gamepad1.left_bumper);
-        } else {
+        } else if (!Wrist.isWristUp()){
             Claws.runClawsTeleop2(gamepad1.right_bumper, gamepad1.left_bumper);
         }
         if (!HardwareLocal.pixelLeft() && !Claws.isLeftOpen() && Wrist.isWristDown()) {
@@ -127,6 +127,7 @@ public class Teleop extends LinearOpMode {
             EgnitionSystem.SLOW_MODE = false;
             EgnitionSystem.WAS_PRESSED = false;
             HardwareLocal.HANGING_LAD = true;
+            drone.setPosition(DRONE_LUNCH);
             Arm.hangingModeArm();
         } else if (gamepad1.x && !Arm.LOADING_MODE_ACTIVE || !gamepad1.x && Arm.LOADING_MODE_ACTIVE) {
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);
@@ -200,10 +201,6 @@ public class Teleop extends LinearOpMode {
     public void initLed() {
         RevBlinkinLedDriver ledDriver = hardwareMap.get(RevBlinkinLedDriver.class, "ledDrive");
         HardwareLocal.init(ledDriver);
-    }
-
-    public void ledTest () {
-        HardwareLocal.blue();
     }
     public void touchAndGo() {
         if (HardwareLocal.getProximityValueLeft() == 152 || HardwareLocal.getProximityValueRight() == 152) {
