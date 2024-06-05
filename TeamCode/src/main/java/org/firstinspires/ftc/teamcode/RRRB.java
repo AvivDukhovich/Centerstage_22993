@@ -124,7 +124,7 @@ public class RRRB extends LinearOpMode {
                     .lineToConstantHeading(new Vector2d(drive.getPoseEstimate().getX() + 24, drive.getPoseEstimate().getY() - 3))
                     .build();
             traj2 = drive.trajectoryBuilder(traj1.end())
-                    .lineToConstantHeading(new Vector2d(traj1.end().getX() + 8, traj1.end().getY() - 32))
+                    .lineToConstantHeading(new Vector2d(traj1.end().getX() + 8, traj1.end().getY() - 30))
                     .build();
             traj3 = drive.trajectoryBuilder(traj2.end())
                     .lineToConstantHeading(new Vector2d(traj2.end().getX() - 28, traj2.end().getY()))
