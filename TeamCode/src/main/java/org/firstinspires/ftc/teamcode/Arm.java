@@ -17,7 +17,7 @@ public class Arm {
     static private int hold_position2 = 0;
     static private int MAX_SPEED = 300;
     static private int HANGING_POSITION = -1195;
-    static public int UNLOADING_POSITION = -1625;
+    static public int UNLOADING_POSITION = -1605;
     static public boolean HANGING_MODE_ACTIVE = false;
     static public boolean DPAD_PRESSED = false;
     static public boolean LOADING_MODE_ACTIVE = false;
