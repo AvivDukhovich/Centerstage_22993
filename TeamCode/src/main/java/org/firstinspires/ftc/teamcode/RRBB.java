@@ -87,11 +87,11 @@ public class RRBB extends LinearOpMode {
                         .build();
             // more forward towards spike mark
             traj2 = drive.trajectoryBuilder(new Pose2d(traj1.end().getX(), traj1.end().getY(), Math.toRadians(-90)))
-                    .lineToConstantHeading(new Vector2d(traj1.end().getX() + 10, traj1.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj1.end().getX() + 10, traj1.end().getY() + 2))
                     .build();
             // towards backdrop
             traj3 = drive.trajectoryBuilder(new Pose2d(traj2.end().getX(), traj2.end().getY(), Math.toRadians(-90)))
-                    .lineToConstantHeading(new Vector2d(traj2.end().getX(), traj2.end().getY() + 29))
+                    .lineToConstantHeading(new Vector2d(traj2.end().getX() - 1, traj2.end().getY() + 28))
                     .build();
 
             // backward
@@ -104,7 +104,7 @@ public class RRBB extends LinearOpMode {
                     .build();
             // park
             traj6 = drive.trajectoryBuilder(traj5.end())
-                    .lineToConstantHeading(new Vector2d(1, traj5.end().getY() + 22))
+                    .lineToConstantHeading(new Vector2d(traj5.end().getX(), traj5.end().getY() + 22))
                     .build();
 
         } else if (position == spike_position.LEFT) {
@@ -118,18 +118,18 @@ public class RRBB extends LinearOpMode {
                     .build();
 
             // Forward towards spike mark
-            traj3 = drive.trajectoryBuilder(new Pose2d(traj1.end().getX(), traj1.end().getY(), Math.toRadians(-80)))
-                    .lineToConstantHeading(new Vector2d(traj1.end().getX() + 26, traj1.end().getY()))
+            traj3 = drive.trajectoryBuilder(new Pose2d(traj1.end().getX(), traj1.end().getY(), Math.toRadians(-90)))
+                    .lineToConstantHeading(new Vector2d(traj1.end().getX() + 28, traj1.end().getY()))
                     .build();
 
             // Towards backdrop
             traj4 = drive.trajectoryBuilder(traj3.end())
-                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 15, traj3.end().getY() + 4))
+                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 21, traj3.end().getY() + 7))
                     .build();
 
             // backwards towards park
             traj6 = drive.trajectoryBuilder(new Pose2d(traj4.end().getX(), traj4.end().getY(), Math.toRadians(0)))
-                    .lineToConstantHeading(new Vector2d(traj4.end().getX() - 15, traj4.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj4.end().getX() - 10, traj4.end().getY()))
                     .build();
 
             // park
@@ -200,7 +200,7 @@ public class RRBB extends LinearOpMode {
             Wrist.setPosition(Wrist.WRIST_DOWN_POSITION-0.1);
             drive.followTrajectory(traj1); // Forward towards spike mark
 //            drive.followTrajectory(traj2); // Left towards spike mark
-            drive.turn(Math.toRadians(-80)); // Turn towards spike mark
+            drive.turn(Math.toRadians(-90)); // Turn towards spike mark
             drive.followTrajectory(traj3); // Forward towards spike mark
             Claws.openRightClaw(); // Place purple pixel on spike mark
             drive.followTrajectory(traj4); // Towards backdrop
@@ -220,7 +220,7 @@ public class RRBB extends LinearOpMode {
             Arm.brake();
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);
             sleep(200);
-            drive.turn(Math.toRadians(80));
+            drive.turn(Math.toRadians(90));
             drive.followTrajectory(traj6);
             drive.followTrajectory(traj7);
         }
