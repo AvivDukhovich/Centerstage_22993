@@ -47,6 +47,8 @@ public class Teleop extends LinearOpMode {
             ledChange();
 
 // Telemetry update
+            telemetry.addData("left" , HardwareLocal.getProximityValueLeft());
+            telemetry.addData("right" , HardwareLocal.getProximityValueRight());
             telemetry.update();
         }
 //        drone.setPosition(0);
@@ -79,6 +81,10 @@ public class Teleop extends LinearOpMode {
         if (!HardwareLocal.pixelRight() && Claws.isRightClose() && Wrist.isWristDown() && HardwareLocal.SENSOR_USAGE) {
             Claws.openRightClaw();
         }
+        if (Wrist.isWristUp() && !HardwareLocal.pixelRight() && !HardwareLocal.pixelLeft() && Claws.isLeftOpen() && Claws.isRightOpen() && HardwareLocal.SENSOR_USAGE) {
+            Claws.closeLeftClaw();
+            Claws.closeRightClaw();
+        }
     }
 
     public void initWrist() {
@@ -92,11 +98,11 @@ public class Teleop extends LinearOpMode {
             Wrist.setPosition(Wrist.WRIST_UNLOADING_POSITION + 0.01 * ((int) ((Arm.getArm1Position() - Arm.UNLOADING_POSITION) / -25)));
             EgnitionSystem.SLOW_MODE = true;
             EgnitionSystem.WAS_PRESSED = false;
-        } else if (Wrist.isWristDown() && HardwareLocal.pixelRight() && HardwareLocal.pixelLeft() && Claws.isLeftClose() && Claws.isRightClose() && !Wrist.UP) {
+        } else if (Wrist.isWristDown() && HardwareLocal.pixelRight() && HardwareLocal.pixelLeft() && Claws.isLeftClose() && Claws.isRightClose() && !Wrist.UP && HardwareLocal.SENSOR_USAGE) {
             sleep(100);
             Wrist.UP = true;
             Wrist.moveUp();
-        } else if (Wrist.isWristDown() && (!HardwareLocal.pixelRight() || !HardwareLocal.pixelLeft()) && Wrist.UP) {
+        } else if (Wrist.isWristDown() && (!HardwareLocal.pixelRight() || !HardwareLocal.pixelLeft()) && Wrist.UP && HardwareLocal.SENSOR_USAGE) {
             Wrist.UP = false;
         } else {
             Wrist.runWrist(gamepad1.y);
@@ -201,14 +207,8 @@ public class Teleop extends LinearOpMode {
     }
 
     public void touchAndGo() {
-        if (gamepad1.a && !HardwareLocal.A_WAS_PRESSED && HardwareLocal.SENSOR_USAGE) {
+        if (HardwareLocal.getProximityValueLeft() == 152 || HardwareLocal.getProximityValueRight() == 152) {
             HardwareLocal.SENSOR_USAGE = false;
-            HardwareLocal.A_WAS_PRESSED = true;
-        } else if (gamepad1.a && !HardwareLocal.A_WAS_PRESSED && !HardwareLocal.SENSOR_USAGE) {
-            HardwareLocal.SENSOR_USAGE = true;
-            HardwareLocal.A_WAS_PRESSED = true;
-        } else {
-            HardwareLocal.A_WAS_PRESSED = false;
         }
         if (Arm.getArm1Position() <= Arm.MINIMAL_HOLD_POSITION) {
             HardwareLocal.PIXEL_IN_L = true;
