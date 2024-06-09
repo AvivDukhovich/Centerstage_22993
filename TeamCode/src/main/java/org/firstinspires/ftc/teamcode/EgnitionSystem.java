@@ -31,6 +31,7 @@ public class EgnitionSystem {
     static public boolean SLOW_MODE;
     static public boolean PIXELS_IN;
     static public boolean WAS_PRESSED;
+    static public boolean A_WAS_PRESSED;
     static public boolean B_WAS_PRESSED;
     static private final double AUTONOMOUS_MOVING_POWER_ORIGINAL = 0.5;
     static private double AUTONOMOUS_MOVING_POWER = AUTONOMOUS_MOVING_POWER_ORIGINAL;
@@ -71,6 +72,7 @@ public class EgnitionSystem {
         WAS_PRESSED = false;
         PIXELS_IN = false;
         B_WAS_PRESSED = false;
+        A_WAS_PRESSED = false;
         AUTONOMOUS_MOVING_POWER = AUTONOMOUS_MOVING_POWER_ORIGINAL;
     }
 

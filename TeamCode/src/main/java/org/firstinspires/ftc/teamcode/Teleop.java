@@ -135,6 +135,7 @@ public class Teleop extends LinearOpMode {
             HardwareLocal.HANGING_LAD = false;
             Arm.HANGING_MODE_ACTIVE = false;
             Arm.DPAD_PRESSED = false;
+            EgnitionSystem.A_WAS_PRESSED = false;
             Arm.loadingModeArm();
         } else {
             Arm.brake();
@@ -168,7 +169,12 @@ public class Teleop extends LinearOpMode {
             EgnitionSystem.WAS_PRESSED = false;
             EgnitionSystem.PIXELS_IN = true;
         }
-        if (Arm.getArm1Position() <= Arm.UNLOADING_POSITION) {
+        if (gamepad1.a || EgnitionSystem.A_WAS_PRESSED) {
+            EgnitionSystem.A_WAS_PRESSED = true;
+            EgnitionSystem.SLOW_MODE = false;
+            EgnitionSystem.WAS_PRESSED = true;
+        }
+        else if (Arm.getArm1Position() <= Arm.UNLOADING_POSITION && !EgnitionSystem.A_WAS_PRESSED) {
             EgnitionSystem.SLOW_MODE = true;
             EgnitionSystem.WAS_PRESSED = false;
         }
