@@ -72,6 +72,10 @@ public class Teleop extends LinearOpMode {
     }
 
     public void runClaws() {
+        if (gamepad1.a) {
+            Claws.openLeftClaw();
+            Claws.openRightClaw();
+        }
         if (Arm.getArm1Position() > Arm.UNLOADING_POSITION && !Wrist.isWristUp() && !Wrist.isWristDown() && HardwareLocal.SENSOR_USAGE) {
             Claws.runClawsTeleop1(gamepad1.right_bumper, gamepad1.left_bumper);
         } else if (!Wrist.isWristUp() && !Wrist.isWristDown() && HardwareLocal.SENSOR_USAGE){
@@ -135,7 +139,6 @@ public class Teleop extends LinearOpMode {
             HardwareLocal.HANGING_LAD = false;
             Arm.HANGING_MODE_ACTIVE = false;
             Arm.DPAD_PRESSED = false;
-            EgnitionSystem.A_WAS_PRESSED = false;
             Arm.loadingModeArm();
         } else {
             Arm.brake();
@@ -169,12 +172,7 @@ public class Teleop extends LinearOpMode {
             EgnitionSystem.WAS_PRESSED = false;
             EgnitionSystem.PIXELS_IN = true;
         }
-        if (gamepad1.a || EgnitionSystem.A_WAS_PRESSED) {
-            EgnitionSystem.A_WAS_PRESSED = true;
-            EgnitionSystem.SLOW_MODE = false;
-            EgnitionSystem.WAS_PRESSED = true;
-        }
-        else if (Arm.getArm1Position() <= Arm.UNLOADING_POSITION && !EgnitionSystem.A_WAS_PRESSED) {
+        if (Arm.getArm1Position() <= Arm.UNLOADING_POSITION) {
             EgnitionSystem.SLOW_MODE = true;
             EgnitionSystem.WAS_PRESSED = false;
         }

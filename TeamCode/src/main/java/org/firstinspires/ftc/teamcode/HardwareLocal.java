@@ -18,8 +18,8 @@ public class HardwareLocal {
     static public boolean HANGING_LAD;
     static public boolean NOTIFICATION_LAD;
     static public boolean SENSOR_USAGE;
-    static private final int DETECTING_DISTANCE_R = 32;
-    static private final int DETECTING_DISTANCE_L = 36;
+    static private final int DETECTING_DISTANCE_R = 34;
+    static private final int DETECTING_DISTANCE_L = 38;
     static public int BLINK_IN_TIME;
 
 // Initializing

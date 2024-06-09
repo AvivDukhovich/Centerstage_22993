@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 // Imports
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -43,22 +42,22 @@ public class Arm {
         got_position_to_hold = false;
 
         rightArm.setPower(1);
-        rightArm.setTargetPosition(rightArm.getCurrentPosition() - (int) (MAX_SPEED * SPEED));
+        rightArm.setTargetPosition(rightArm.getCurrentPosition() - (int) (MAX_SPEED * SPEED * SPEED));
         rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         leftArm.setPower(1);
-        leftArm.setTargetPosition(leftArm.getCurrentPosition() + (int) (MAX_SPEED * SPEED));
+        leftArm.setTargetPosition(leftArm.getCurrentPosition() + (int) (MAX_SPEED * SPEED * SPEED));
         leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
     public static void moveDown(double SPEED) {
         got_position_to_hold = false;
 
         rightArm.setPower(1);
-        rightArm.setTargetPosition(rightArm.getCurrentPosition() + (int) (MAX_SPEED * SPEED));
+        rightArm.setTargetPosition(rightArm.getCurrentPosition() + (int) (MAX_SPEED * SPEED * SPEED));
         rightArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         leftArm.setPower(1);
-        leftArm.setTargetPosition(leftArm.getCurrentPosition() - (int) (MAX_SPEED * SPEED));
+        leftArm.setTargetPosition(leftArm.getCurrentPosition() - (int) (MAX_SPEED * SPEED * SPEED));
         leftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
     public static void hangingModeArm() {
