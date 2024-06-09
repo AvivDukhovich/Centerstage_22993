@@ -72,9 +72,9 @@ public class Teleop extends LinearOpMode {
     }
 
     public void runClaws() {
-        if (Arm.getArm1Position() > Arm.UNLOADING_POSITION && !Wrist.isWristUp()) {
+        if (Arm.getArm1Position() > Arm.UNLOADING_POSITION && !Wrist.isWristUp() && !Wrist.isWristDown() && HardwareLocal.SENSOR_USAGE) {
             Claws.runClawsTeleop1(gamepad1.right_bumper, gamepad1.left_bumper);
-        } else if (!Wrist.isWristUp()){
+        } else if (!Wrist.isWristUp() && !Wrist.isWristDown() && HardwareLocal.SENSOR_USAGE){
             Claws.runClawsTeleop2(gamepad1.right_bumper, gamepad1.left_bumper);
         }
         if (!HardwareLocal.pixelLeft() && !Claws.isLeftOpen() && Wrist.isWristDown()) {
