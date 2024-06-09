@@ -168,7 +168,6 @@ public class RRRB extends LinearOpMode {
         else if (position == spike_position.LEFT) {
 
             // Execute left path
-            Wrist.setPosition(Wrist.WRIST_DOWN_POSITION);
             drive.followTrajectory(traj1);
             drive.turn(Math.toRadians(90));
             Claws.openRightClaw();

@@ -91,7 +91,7 @@ public class EgnitionSystem {
     /**
      * Teleop mecanum drive train (normal power)
      */
-    public static void runTeleop1() {
+    public static void runTeleopFast() {
         fl_wheel.setPower(((adjustedLy + adjustedLx + rx) / max) * POWER);
         bl_wheel.setPower(((adjustedLy - adjustedLx + rx) / max) * POWER);
         fr_wheel.setPower(((adjustedLy - adjustedLx - rx) / max) * POWER);
@@ -101,13 +101,19 @@ public class EgnitionSystem {
     /**
      * Teleop mecanum drive train (slow power)
      */
-    public static void runTeleop2() {
+    public static void runTeleopSlow() {
         fl_wheel.setPower(((adjustedLy + adjustedLx + rx) / max) * SLOW_POWER);
         bl_wheel.setPower(((adjustedLy - adjustedLx + rx) / max) * SLOW_POWER);
         fr_wheel.setPower(((adjustedLy - adjustedLx - rx) / max) * SLOW_POWER);
         br_wheel.setPower(((adjustedLy + adjustedLx - rx) / max) * SLOW_POWER);
     }
 
+    public static void runTeleopPickUp() {
+        fl_wheel.setPower(((adjustedLy + adjustedLx + rx) / max) * (SLOW_POWER + 0.1));
+        bl_wheel.setPower(((adjustedLy - adjustedLx + rx) / max) * (SLOW_POWER + 0.1));
+        fr_wheel.setPower(((adjustedLy - adjustedLx - rx) / max) * (SLOW_POWER + 0.1));
+        br_wheel.setPower(((adjustedLy + adjustedLx - rx) / max) * (SLOW_POWER + 0.1));
+    }
     public static void updateVariablesTeleop(Gamepad gamepad1, Telemetry telemetry) {
         lx = gamepad1.left_stick_x;
         ly = -gamepad1.left_stick_y;

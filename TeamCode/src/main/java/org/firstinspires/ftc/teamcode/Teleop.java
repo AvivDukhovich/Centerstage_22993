@@ -10,8 +10,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.checkerframework.checker.units.qual.A;
-
 // Teleop
 @TeleOp(name = "CenterStage TeleOp")
 public class Teleop extends LinearOpMode {
@@ -184,11 +182,14 @@ public class Teleop extends LinearOpMode {
         if (!gamepad1.left_stick_button && !gamepad1.right_stick_button) {
             EgnitionSystem.WAS_PRESSED = false;
         }
-        if (!EgnitionSystem.SLOW_MODE) {
-            EgnitionSystem.runTeleop1();
+        if (Wrist.isWristDown()) {
+            EgnitionSystem.runTeleopPickUp();
+        }
+        else if (!EgnitionSystem.SLOW_MODE) {
+            EgnitionSystem.runTeleopFast();
         }
         else {
-            EgnitionSystem.runTeleop2();
+            EgnitionSystem.runTeleopSlow();
         }
     }
 
