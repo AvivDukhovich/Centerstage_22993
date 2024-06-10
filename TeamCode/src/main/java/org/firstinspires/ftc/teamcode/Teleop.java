@@ -72,7 +72,7 @@ public class Teleop extends LinearOpMode {
     }
 
     public void runClaws() {
-        if (gamepad1.a) {
+        if (gamepad1.a && !Wrist.isWristUp()) {
             Claws.openLeftClaw();
             Claws.openRightClaw();
         }
@@ -246,7 +246,7 @@ public class Teleop extends LinearOpMode {
             }
         } else if (HardwareLocal.HANGING_LAD) {
             HardwareLocal.blue();
-        } else if (HardwareLocal.pixelRight() && HardwareLocal.pixelLeft()) {
+        } else if (HardwareLocal.pixelRight() && HardwareLocal.pixelLeft() && Claws.isLeftClose() && Claws.isRightClose()) {
             HardwareLocal.green();
         } else if (!HardwareLocal.pixelRight() && HardwareLocal.pixelLeft() || HardwareLocal.pixelRight() && !HardwareLocal.pixelLeft()) {
             if (HardwareLocal.BLINK_IN_TIME >= 0 && HardwareLocal.BLINK_IN_TIME < 5) {
