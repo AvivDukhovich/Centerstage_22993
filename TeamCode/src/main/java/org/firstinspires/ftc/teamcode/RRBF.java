@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -143,7 +141,7 @@ public class RRBF extends LinearOpMode {
     }
     public void collectWhitePixel1() {
         while (!(Arm.arrivedPosition(Arm.getArm1Position(), Arm.COLLECT_WHITE_PIXEL_POSITION, false) && opModeIsActive())) {
-            Arm.moveUp(0.1 );
+            Arm.moveUp(0.1 , 1);
         }
         Arm.BRAKE();
         Wrist.setPosition(0.9);

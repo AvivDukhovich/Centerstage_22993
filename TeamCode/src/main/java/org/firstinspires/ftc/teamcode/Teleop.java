@@ -116,13 +116,22 @@ public class Teleop extends LinearOpMode {
     }
 
     public void runArm() {
-        if (gamepad1.right_trigger > 0 && Arm.getArm1Position() >= -2200) {
-            Arm.moveUp(gamepad1.right_trigger);
+        if (gamepad1.right_trigger > 0 && Arm.getArm1Position() >= -1595) {
+            Arm.moveUp(gamepad1.right_trigger, 1);
             HardwareLocal.HANGING_LAD = false;
-        } else if (gamepad1.left_trigger > 0 && Arm.getArm1Position() <= -20 && Arm.getArm2Position() >= 20) {
-            Arm.moveDown(gamepad1.left_trigger);
+        } else if (gamepad1.left_trigger > 0 && Arm.getArm1Position() <= -20 && Arm.getArm2Position() >= 20 && Arm.getArm1Position() >= -1595) {
+            Arm.moveDown(gamepad1.left_trigger, 1);
             HardwareLocal.HANGING_LAD = false;
-        } else if (gamepad1.dpad_up && !Arm.HANGING_MODE_ACTIVE || !gamepad1.dpad_up && Arm.HANGING_MODE_ACTIVE) {
+        }
+        else if (gamepad1.right_trigger > 0 && Arm.getArm1Position() >= -2200) {
+            Arm.moveUp(gamepad1.right_trigger, 0.3);
+            HardwareLocal.HANGING_LAD = false;
+        }
+        else if (gamepad1.left_trigger > 0 && Arm.getArm1Position() <= -20 && Arm.getArm2Position() >= 20) {
+            Arm.moveDown(gamepad1.left_trigger, 0.3);
+            HardwareLocal.HANGING_LAD = false;
+        }
+        else if (gamepad1.dpad_up && !Arm.HANGING_MODE_ACTIVE || !gamepad1.dpad_up && Arm.HANGING_MODE_ACTIVE) {
             Claws.closeRightClaw();
             Claws.closeLeftClaw();
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);

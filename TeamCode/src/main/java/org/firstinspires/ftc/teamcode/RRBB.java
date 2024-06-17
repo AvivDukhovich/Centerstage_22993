@@ -175,14 +175,14 @@ public class RRBB extends LinearOpMode {
             Wrist.setPosition(0.4); // Lift wrist up
             sleep(200);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_UP_POSITION-100, false)) && opModeIsActive()) {
-                Arm.moveUp(ARM_SPEED); // Lift the arm up
+                Arm.moveUp(ARM_SPEED, 1); // Lift the arm up
             }
             Arm.brake();
             sleep(800);
             Claws.openLeftClaw(); // Place yellow pixel on the backdrop
             sleep(500);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
-                Arm.moveDown(ARM_SPEED); // Move the arm down
+                Arm.moveDown(ARM_SPEED, 1); // Move the arm down
             }
             Arm.brake();
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);
@@ -208,14 +208,14 @@ public class RRBB extends LinearOpMode {
             Wrist.setPosition(0.35);
             sleep(200);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_UP_POSITION-50, false)) && opModeIsActive()) {
-                Arm.moveUp(ARM_SPEED);
+                Arm.moveUp(ARM_SPEED, 1);
             }
             Arm.brake();
             sleep(800);
             Claws.openLeftClaw();
             sleep(500);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
-                Arm.moveDown(ARM_SPEED);
+                Arm.moveDown(ARM_SPEED, 1);
             }
             Arm.brake();
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);
@@ -236,14 +236,14 @@ public class RRBB extends LinearOpMode {
             drive.turn(Math.toRadians(-90));
             Wrist.setPosition(0.35);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_UP_POSITION-100, false)) && opModeIsActive()) {
-                Arm.moveUp(ARM_SPEED);
+                Arm.moveUp(ARM_SPEED, 1);
             }
             Arm.brake();
             sleep(1000);
             Claws.openLeftClaw();
             sleep(500);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
-                Arm.moveDown(ARM_SPEED);
+                Arm.moveDown(ARM_SPEED, 1);
             }
             Arm.brake();
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);

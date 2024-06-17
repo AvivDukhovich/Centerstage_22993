@@ -149,14 +149,14 @@ public class RRRB extends LinearOpMode {
             Wrist.setPosition(0.4);
             sleep(200);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_UP_POSITION-50, false)) && opModeIsActive()) {
-                Arm.moveUp(ARM_SPEED);
+                Arm.moveUp(ARM_SPEED, 1);
             }
             Arm.brake();
             sleep(800);
             Claws.openLeftClaw();
             sleep(500);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
-                Arm.moveDown(ARM_SPEED);
+                Arm.moveDown(ARM_SPEED, 1);
             }
             Arm.brake();
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);
@@ -175,14 +175,14 @@ public class RRRB extends LinearOpMode {
             Wrist.setPosition(0.4);
             sleep(200);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_UP_POSITION-100, false)) && opModeIsActive()) {
-                Arm.moveUp(ARM_SPEED);
+                Arm.moveUp(ARM_SPEED, 1);
             }
             Arm.brake();
             sleep(800);
             Claws.openLeftClaw();
             sleep(500);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
-                Arm.moveDown(ARM_SPEED);
+                Arm.moveDown(ARM_SPEED, 1);
             }
             Arm.brake();
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);
@@ -201,14 +201,14 @@ public class RRRB extends LinearOpMode {
             drive.turn(Math.toRadians(90));
             Wrist.setPosition(0.4);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_UP_POSITION-100, false)) && opModeIsActive()) {
-                Arm.moveUp(ARM_SPEED);
+                Arm.moveUp(ARM_SPEED, 1);
             }
             Arm.brake();
             sleep(1200);
             Claws.openLeftClaw();
             sleep(300);
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
-                Arm.moveDown(ARM_SPEED);
+                Arm.moveDown(ARM_SPEED, 1);
             }
             Arm.brake();
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);
