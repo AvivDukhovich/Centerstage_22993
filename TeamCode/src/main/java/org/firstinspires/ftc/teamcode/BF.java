@@ -9,9 +9,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name = "RRBF")
+@Autonomous(name = "BF")
 
-public class RRBF extends LinearOpMode {
+public class BF extends LinearOpMode {
 
     double ARM_SPEED = 0.6;
     int ARM_UP_POSITION = -2000;
