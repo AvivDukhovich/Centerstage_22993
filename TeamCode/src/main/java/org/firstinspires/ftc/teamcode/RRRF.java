@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -86,33 +88,209 @@ public class RRRF extends LinearOpMode {
 
             // Initialize right path
 
-        }
-        else if (position == spike_position.LEFT) {
+            traj1 = drive.trajectoryBuilder(drive.getPoseEstimate())
+                    .lineToConstantHeading(new Vector2d(drive.getPoseEstimate().getX() + 40, drive.getPoseEstimate().getY() - 2))
+                    .build();
+            traj2 = drive.trajectoryBuilder(new Pose2d(traj1.end().getX(), traj1.end().getY(), Math.toRadians(90)))
+                    .lineToConstantHeading(new Vector2d(traj1.end().getX() - 2, traj1.end().getY() + 36))
+                    .build();
+            traj3 = drive.trajectoryBuilder(new Pose2d(traj2.end().getX(), traj2.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj2.end().getX() + 42, traj2.end().getY() - 160))
+                    .build();
+            traj4 = drive.trajectoryBuilder(new Pose2d(traj3.end().getX(), traj3.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 46, traj3.end().getY()))
+                    .build();
+            traj5 = drive.trajectoryBuilder(new Pose2d(traj4.end().getX(), traj4.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj4.end().getX() - 34, traj4.end().getY()))
+                    .build();
+            traj6 = drive.trajectoryBuilder(new Pose2d(traj5.end().getX(), traj5.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj5.end().getX(), traj5.end().getY() - 43))
+                    .build();
+
+        } else if (position == spike_position.LEFT) {
 
             // Initialize left path
 
-        }
-        else {
+            traj1 = drive.trajectoryBuilder(drive.getPoseEstimate())
+                    .lineToConstantHeading(new Vector2d(drive.getPoseEstimate().getX() + 40, drive.getPoseEstimate().getY()))
+                    .build();
+            traj2 = drive.trajectoryBuilder(new Pose2d(traj1.end().getX(), traj1.end().getY(), Math.toRadians(90)))
+                    .lineToConstantHeading(new Vector2d(traj1.end().getX() - 2, traj1.end().getY() + 34))
+                    .build();
+            traj3 = drive.trajectoryBuilder(new Pose2d(traj2.end().getX(), traj2.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj2.end().getX() + 42, traj2.end().getY() - 160))
+                    .build();
+            traj4 = drive.trajectoryBuilder(new Pose2d(traj3.end().getX(), traj3.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 46, traj3.end().getY()))
+                    .build();
+            traj5 = drive.trajectoryBuilder(new Pose2d(traj4.end().getX(), traj4.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj4.end().getX() - 34, traj4.end().getY()))
+                    .build();
+            traj6 = drive.trajectoryBuilder(new Pose2d(traj5.end().getX(), traj5.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj5.end().getX(), traj5.end().getY() - 43))
+                    .build();
+
+        } else {
 
             // Initialize Center path
 
+            traj1 = drive.trajectoryBuilder(drive.getPoseEstimate())
+                    .lineToConstantHeading(new Vector2d(drive.getPoseEstimate().getX() + 40, drive.getPoseEstimate().getY()))
+                    .build();
+            traj2 = drive.trajectoryBuilder(new Pose2d(traj1.end().getX(), traj1.end().getY(), Math.toRadians(90)))
+                    .lineToConstantHeading(new Vector2d(traj1.end().getX() - 2, traj1.end().getY() + 34))
+                    .build();
+            traj3 = drive.trajectoryBuilder(new Pose2d(traj2.end().getX(), traj2.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj2.end().getX() + 42, traj2.end().getY() - 160))
+                    .build();
+            traj4 = drive.trajectoryBuilder(new Pose2d(traj3.end().getX(), traj3.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 46, traj3.end().getY()))
+                    .build();
+            traj5 = drive.trajectoryBuilder(new Pose2d(traj4.end().getX(), traj4.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj4.end().getX() - 34, traj4.end().getY()))
+                    .build();
+            traj6 = drive.trajectoryBuilder(new Pose2d(traj5.end().getX(), traj5.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj5.end().getX(), traj5.end().getY() - 43))
+                    .build();
         }
+
         if (isStopRequested()) return;
 
+        // Choose a path according to the spike position
         if (position == spike_position.RIGHT) {
 
             // Execute right path
 
+            drive.followTrajectory(traj1);
+            drive.turn(Math.toRadians(-90));
+            Claws.openRightClaw();
+            Wrist.setPosition(Wrist.WRIST_UP_POSITION);
+            drive.turn(Math.toRadians(90));
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), -150, false)) && opModeIsActive()) {
+                Arm.moveUp(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            Wrist.setPosition(0.71);
+            sleep(500);
+            drive.followTrajectory(traj2);
+            Claws.closeRightClaw();
+            Wrist.moveUp();
+            sleep(300);
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
+                Arm.moveDown(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            sleep(500);
+            drive.followTrajectory(traj3);
+            drive.followTrajectory(traj4);
+            Wrist.setPosition(0.4);
+            sleep(200);
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_UP_POSITION-50, false)) && opModeIsActive()) {
+                Arm.moveUp(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            sleep(800);
+            Claws.openLeftClaw();
+            Claws.openRightClaw();
+            sleep(500);
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
+                Arm.moveDown(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            Wrist.setPosition(Wrist.WRIST_UP_POSITION);
+            sleep(500);
+            drive.followTrajectory(traj5);
+            drive.followTrajectory(traj6);
         }
         else if (position == spike_position.LEFT) {
 
             // Execute left path
 
+            drive.followTrajectory(traj1);
+            drive.turn(Math.toRadians(-90));
+            Claws.openRightClaw();
+            Wrist.setPosition(Wrist.WRIST_UP_POSITION);
+            drive.turn(Math.toRadians(90));
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), -150, false)) && opModeIsActive()) {
+                Arm.moveUp(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            Wrist.setPosition(0.71);
+            sleep(500);
+            drive.followTrajectory(traj2);
+            Claws.closeRightClaw();
+            Wrist.moveUp();
+            sleep(300);
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
+                Arm.moveDown(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            sleep(500);
+            drive.followTrajectory(traj3);
+            drive.followTrajectory(traj4);
+            Wrist.setPosition(0.4);
+            sleep(200);
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_UP_POSITION-50, false)) && opModeIsActive()) {
+                Arm.moveUp(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            sleep(800);
+            Claws.openLeftClaw();
+            Claws.openRightClaw();
+            sleep(500);
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
+                Arm.moveDown(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            Wrist.setPosition(Wrist.WRIST_UP_POSITION);
+            sleep(500);
+            drive.followTrajectory(traj5);
+            drive.followTrajectory(traj6);
         }
         else {
 
             // Execute Center path
 
+            drive.followTrajectory(traj1);
+            drive.turn(Math.toRadians(-90));
+            Claws.openRightClaw();
+            Wrist.setPosition(Wrist.WRIST_UP_POSITION);
+            drive.turn(Math.toRadians(90));
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), -150, false)) && opModeIsActive()) {
+                Arm.moveUp(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            Wrist.setPosition(0.71);
+            sleep(500);
+            drive.followTrajectory(traj2);
+            Claws.closeRightClaw();
+            Wrist.moveUp();
+            sleep(300);
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
+                Arm.moveDown(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            sleep(500);
+            drive.followTrajectory(traj3);
+            drive.followTrajectory(traj4);
+            Wrist.setPosition(0.4);
+            sleep(200);
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_UP_POSITION-50, false)) && opModeIsActive()) {
+                Arm.moveUp(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            sleep(800);
+            Claws.openLeftClaw();
+            Claws.openRightClaw();
+            sleep(500);
+            while (!(Arm.arrivedPosition(Arm.getArm1Position(), ARM_DOWN_POSITION, true)) && opModeIsActive()) {
+                Arm.moveDown(ARM_SPEED, 1);
+            }
+            Arm.brake();
+            Wrist.setPosition(Wrist.WRIST_UP_POSITION);
+            sleep(500);
+            drive.followTrajectory(traj5);
+            drive.followTrajectory(traj6);
         }
     }
 
