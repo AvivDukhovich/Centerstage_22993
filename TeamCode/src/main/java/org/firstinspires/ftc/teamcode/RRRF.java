@@ -58,28 +58,36 @@ public class RRRF extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        while (opModeInInit()) {
-            if (PixelDetectorRF.getSpike_position() == 0) {
-                position = spike_position.CENTER;
-                HardwareLocal.green();
-            }
-            else if (PixelDetectorRF.getSpike_position() == 1) {
-                position = spike_position.LEFT;
-                HardwareLocal.green();
-            }
-            else {
-                position = spike_position.RIGHT;
-                HardwareLocal.green();
-            }
-
-            telemetry.addData("Spike Position: ", position);
-            telemetry.addData("Right Region avg: ", Camera.getRightRegion_avg(2));
-            telemetry.addData("Left Region avg: ", Camera.getLeftRegion_avg(2));
-            telemetry.update();
-        }
-        Camera.close(2);
+//        while (opModeInInit()) {
+//            if (PixelDetectorRF.getSpike_position() == 0) {
+//                position = spike_position.CENTER;
+//                HardwareLocal.green();
+//            }
+//            else if (PixelDetectorRF.getSpike_position() == 1) {
+//                position = spike_position.LEFT;
+//                HardwareLocal.green();
+//            }
+//            else {
+//                position = spike_position.RIGHT;
+//                HardwareLocal.green();
+//            }
+//
+//            telemetry.addData("Spike Position: ", position);
+//            telemetry.addData("Right Region avg: ", Camera.getRightRegion_avg(2));
+//            telemetry.addData("Left Region avg: ", Camera.getLeftRegion_avg(2));
+//            telemetry.update();
+//        }
+//        Camera.close(2);
+        position = spike_position.RIGHT;
 
         waitForStart();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Arm.brake();
+//            }
+//        }).start();
+
         Wrist.setPosition(Wrist.WRIST_DOWN_POSITION_Autonomous);
         sleep(500);
 
@@ -89,16 +97,16 @@ public class RRRF extends LinearOpMode {
             // Initialize right path
 
             traj1 = drive.trajectoryBuilder(drive.getPoseEstimate())
-                    .lineToConstantHeading(new Vector2d(drive.getPoseEstimate().getX() + 40, drive.getPoseEstimate().getY() - 2))
+                    .lineToConstantHeading(new Vector2d(drive.getPoseEstimate().getX() + 31, drive.getPoseEstimate().getY() + 4))
                     .build();
             traj2 = drive.trajectoryBuilder(new Pose2d(traj1.end().getX(), traj1.end().getY(), Math.toRadians(90)))
                     .lineToConstantHeading(new Vector2d(traj1.end().getX() - 2, traj1.end().getY() + 36))
                     .build();
             traj3 = drive.trajectoryBuilder(new Pose2d(traj2.end().getX(), traj2.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj2.end().getX() + 42, traj2.end().getY() - 160))
+                    .lineToConstantHeading(new Vector2d(traj2.end().getX() + 22, traj2.end().getY() - 160))
                     .build();
             traj4 = drive.trajectoryBuilder(new Pose2d(traj3.end().getX(), traj3.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 46, traj3.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 26, traj3.end().getY()))
                     .build();
             traj5 = drive.trajectoryBuilder(new Pose2d(traj4.end().getX(), traj4.end().getY()))
                     .lineToConstantHeading(new Vector2d(traj4.end().getX() - 34, traj4.end().getY()))
@@ -164,8 +172,9 @@ public class RRRF extends LinearOpMode {
             drive.followTrajectory(traj1);
             drive.turn(Math.toRadians(-90));
             Claws.openRightClaw();
+            sleep(200);
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);
-            drive.turn(Math.toRadians(90));
+            drive.turn(Math.toRadians(180));
             while (!(Arm.arrivedPosition(Arm.getArm1Position(), -150, false)) && opModeIsActive()) {
                 Arm.moveUp(ARM_SPEED, 1);
             }
