@@ -91,27 +91,50 @@ public class RF extends LinearOpMode {
             // Initialize right path
 
             traj1 = drive.trajectoryBuilder(drive.getPoseEstimate())
-                    .lineToConstantHeading(new Vector2d(drive.getPoseEstimate().getX() + 30, drive.getPoseEstimate().getY() + 2))
+                    .lineToConstantHeading(new Vector2d(drive.getPoseEstimate().getX() + 28, drive.getPoseEstimate().getY() + 2))
                     .build();
             traj2 = drive.trajectoryBuilder(new Pose2d(traj1.end().getX(), traj1.end().getY(), Math.toRadians(90)))
-                    .lineToConstantHeading(new Vector2d(traj1.end().getX() + 22, traj1.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj1.end().getX() + 24, traj1.end().getY()))
                     .build();
             traj3 = drive.trajectoryBuilder(new Pose2d(traj2.end().getX(), traj2.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj2.end().getX(), traj2.end().getY() - 72))
+                    .lineToConstantHeading(new Vector2d(traj2.end().getX(), traj2.end().getY() - 79))
                     .build();
             traj4 = drive.trajectoryBuilder(new Pose2d(traj3.end().getX(), traj3.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 36, traj3.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 32, traj3.end().getY()))
                     .build();
             traj5 = drive.trajectoryBuilder(new Pose2d(traj4.end().getX(), traj4.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj4.end().getX() - 15, traj4.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj4.end().getX() - 17, traj4.end().getY()))
                     .build();
             traj6 = drive.trajectoryBuilder(new Pose2d(traj5.end().getX(), traj5.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj5.end().getX(), traj5.end().getY() - 20))
+                    .lineToConstantHeading(new Vector2d(traj5.end().getX(), traj5.end().getY() - 15))
                     .build();
 
         } else if (position == spike_position.LEFT) {
 
             // Initialize left path
+
+            traj1 = drive.trajectoryBuilder(drive.getPoseEstimate())
+                    .lineToConstantHeading(new Vector2d(drive.getPoseEstimate().getX() + 28, drive.getPoseEstimate().getY() - 2))
+                    .build();
+            traj2 = drive.trajectoryBuilder(new Pose2d(traj1.end().getX(), traj1.end().getY(), Math.toRadians(90)))
+                    .lineToConstantHeading(new Vector2d(traj1.end().getX() + 24, traj1.end().getY() + 4))
+                    .build();
+            traj3 = drive.trajectoryBuilder(new Pose2d(traj2.end().getX(), traj2.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj2.end().getX(), traj2.end().getY() - 79))
+                    .build();
+            traj4 = drive.trajectoryBuilder(new Pose2d(traj3.end().getX(), traj3.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 32, traj3.end().getY()))
+                    .build();
+            traj5 = drive.trajectoryBuilder(new Pose2d(traj4.end().getX(), traj4.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj4.end().getX() - 17, traj4.end().getY()))
+                    .build();
+            traj6 = drive.trajectoryBuilder(new Pose2d(traj5.end().getX(), traj5.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj5.end().getX(), traj5.end().getY() - 15))
+                    .build();
+
+        } else {
+
+            // Initialize Center path
 
             traj1 = drive.trajectoryBuilder(drive.getPoseEstimate())
                     .lineToConstantHeading(new Vector2d(drive.getPoseEstimate().getX() + 30, drive.getPoseEstimate().getY()))
@@ -120,39 +143,16 @@ public class RF extends LinearOpMode {
                     .lineToConstantHeading(new Vector2d(traj1.end().getX() + 22, traj1.end().getY()))
                     .build();
             traj3 = drive.trajectoryBuilder(new Pose2d(traj2.end().getX(), traj2.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj2.end().getX(), traj2.end().getY() - 72))
+                    .lineToConstantHeading(new Vector2d(traj2.end().getX(), traj2.end().getY() - 77))
                     .build();
             traj4 = drive.trajectoryBuilder(new Pose2d(traj3.end().getX(), traj3.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 36, traj3.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 32, traj3.end().getY()))
                     .build();
             traj5 = drive.trajectoryBuilder(new Pose2d(traj4.end().getX(), traj4.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj4.end().getX() - 15, traj4.end().getY()))
+                    .lineToConstantHeading(new Vector2d(traj4.end().getX() - 17, traj4.end().getY()))
                     .build();
             traj6 = drive.trajectoryBuilder(new Pose2d(traj5.end().getX(), traj5.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj5.end().getX(), traj5.end().getY() - 20))
-                    .build();
-
-        } else {
-
-            // Initialize Center path
-
-            traj1 = drive.trajectoryBuilder(drive.getPoseEstimate())
-                    .lineToConstantHeading(new Vector2d(drive.getPoseEstimate().getX() + 24, drive.getPoseEstimate().getY()))
-                    .build();
-            traj2 = drive.trajectoryBuilder(new Pose2d(traj1.end().getX(), traj1.end().getY(), Math.toRadians(90)))
-                    .lineToConstantHeading(new Vector2d(traj1.end().getX() + 28, traj1.end().getY()))
-                    .build();
-            traj3 = drive.trajectoryBuilder(new Pose2d(traj2.end().getX(), traj2.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj2.end().getX(), traj2.end().getY() - 72))
-                    .build();
-            traj4 = drive.trajectoryBuilder(new Pose2d(traj3.end().getX(), traj3.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj3.end().getX() - 36, traj3.end().getY()))
-                    .build();
-            traj5 = drive.trajectoryBuilder(new Pose2d(traj4.end().getX(), traj4.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj4.end().getX() - 15, traj4.end().getY()))
-                    .build();
-            traj6 = drive.trajectoryBuilder(new Pose2d(traj5.end().getX(), traj5.end().getY()))
-                    .lineToConstantHeading(new Vector2d(traj5.end().getX(), traj5.end().getY() - 20))
+                    .lineToConstantHeading(new Vector2d(traj5.end().getX(), traj5.end().getY() - 15))
                     .build();
         }
 
@@ -227,10 +227,10 @@ public class RF extends LinearOpMode {
             // Execute Center path
 
             drive.followTrajectory(traj1);
-            drive.turn(Math.toRadians(90));
             Claws.openRightClaw();
             sleep(200);
             Wrist.setPosition(Wrist.WRIST_UP_POSITION);
+            drive.turn(Math.toRadians(90));
             drive.followTrajectory(traj2);
             drive.followTrajectory(traj3);
             drive.followTrajectory(traj4);
